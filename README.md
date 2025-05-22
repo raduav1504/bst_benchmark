@@ -41,10 +41,9 @@ Generăm **7** fișiere de test, fiecare cu **Q = 1 000 000** operații și valo
 | `heavy_op6.in` | 70 % tip 6 (range query), restul egal                                                |
 | `equal_mix.in` | Împărțire egală a celor 6 tipuri de operații                                                |
 
-## 4. Rezultate
+## Rezultate
 
-
-Timpuri de execuție (ms) obținute pe mașina de referință:
+Pentru fiecare dintre cele 7 categorii am generat 5 instanțe diferite de teste și am rulat fiecare implementare de **5 ori** pe fiecare fișier, obținând în total **35 de măsurători** pentru Treap și 35 pentru Splay. În tabelul de mai jos sunt prezentate **valorile medii** ale timpilor de execuție (în milisecunde):
 
 | Test           | Treap   | Splay   |
 |----------------|--------:|--------:|
@@ -55,12 +54,4 @@ Timpuri de execuție (ms) obținute pe mașina de referință:
 | heavy_op5      |   8 809 |   9 599 |
 | heavy_op6      | 102 191 | 108 803 |
 | equal_mix      |  72 825 |  82 373 |
-
----
-
-## Rezultate
-
-- Operațiile de tip **Range (6)** sunt cele mai costisitoare, deoarece traversează subarborele complet.  
-- În scenariile “heavy” pe o singură operație, cele două implementări au performanțe similare.  
-- **Splay Tree** beneficiază de localitatea accesărilor secvențiale prin mecanismul de splaying.
 
