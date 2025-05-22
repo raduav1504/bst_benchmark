@@ -29,7 +29,7 @@ Cele şase operații ABCE (din Infoarena “abce”) implementate și măsurate 
 
 ## 3. Cazurile de test
 
-Generăm **7** fișiere de test, fiecare cu **Q = 750 000** operații și valori X,Y ∈ [−10⁹, 10⁹]:
+Generăm **7** fișiere de test, fiecare cu **Q = 1 000 000** operații și valori X,Y ∈ [−10⁹, 10⁹]:
 
 | Nume fișier   | Mix operații                   | Detalii                                                                                     |
 |---------------|--------------------------------|---------------------------------------------------------------------------------------------|  
