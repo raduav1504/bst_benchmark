@@ -58,14 +58,14 @@ Pentru fiecare dintre cele 7 categorii am generat 20 de instanțe diferite de te
 ## Interpretarea Datelor
 
 
-#Operații de inserare 
+### perații de inserare 
 - **Rezultat**: Treap 159 280 ms vs Splay 171 862 ms → **Treap ~7 % mai rapid**  
 - **Explicație**:  
   - Inserarea într-un Treap se face printr-o simplă rotație pe baza priorității, în timp ce Splay Tree face un întreg șir de rotații „zig” pentru a aduce nodul inserat în rădăcină.  
   - Într-un scenariu cu predominanță de inserții, overhead-ul splay-urilor repetate se resimte mai puternic, iar Treap-ul se impune.
 
 
-**Operații de ștergere, căutare, predecesor și succesor**  
+### Operații de ștergere, căutare, predecesor și succesor
 
 - **Timpi medii**:  
   | Test       | Treap (ms) | Splay (ms) | Observație                       |
@@ -83,7 +83,7 @@ Pentru fiecare dintre cele 7 categorii am generat 20 de instanțe diferite de te
 
 ---
 
-**Operații de interval** 
+### Operații de interval
 - **Rezultat**: Treap 102 191 ms vs Splay 108 803 ms → **Treap ~6 % mai rapid**  
 - **Explicație**:  
   - O interogare de tip range costă O(k + log n), unde k = numărul de noduri din interval. Cu Q mare, k ajunge să domine costul.  
@@ -91,7 +91,7 @@ Pentru fiecare dintre cele 7 categorii am generat 20 de instanțe diferite de te
 
 ---
 
-#Distribuție egală (`equal_mix.in`)
+### Distribuție egală (`equal_mix.in`)
 
 - **Rezultat**: Treap 72 825 ms vs Splay 82 373 ms → **Treap ~12 % mai rapid**  
 - **Interpretare**:  
