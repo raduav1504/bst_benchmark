@@ -65,7 +65,7 @@ Pentru fiecare dintre cele 7 categorii am generat 20 de instanțe diferite de te
   - Într-un scenariu cu predominanță de inserții, overhead-ul splay-urilor repetate se resimte mai puternic, iar Treap-ul se impune.
 
 
-#Operații de ștergere, căutare, predecesor și succesor  
+**Operații de ștergere, căutare, predecesor și succesor**  
 
 - **Timpi medii**:  
   | Test       | Treap (ms) | Splay (ms) | Observație                       |
@@ -83,7 +83,7 @@ Pentru fiecare dintre cele 7 categorii am generat 20 de instanțe diferite de te
 
 ---
 
-# Operații de interval 
+**Operații de interval** 
 - **Rezultat**: Treap 102 191 ms vs Splay 108 803 ms → **Treap ~6 % mai rapid**  
 - **Explicație**:  
   - O interogare de tip range costă O(k + log n), unde k = numărul de noduri din interval. Cu Q mare, k ajunge să domine costul.  
