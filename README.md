@@ -10,7 +10,7 @@ Acest proiect compară două structuri de date echilibrate – **Treap** și **S
 Un **Treap** este un arbore binar de căutare care, pe lângă cheia fiecărui nod, stochează și o _prioritate_ aleasă aleator. Invariantul BST se menține pe chei, iar heap-ul (max-heap sau min-heap) se menține pe priorități. La inserare și ștergere se folosesc rotații pentru a restaura proprietatea de heap, asigurând complexitate amortizată O(log n).
 
 ### Splay Tree  
-Un **Splay Tree** este un arbore binar de căutare auto-aranjat. Orice acces (inserare, căutare, ștergere) “spleiază” (aduce în rădăcină) nodul accesat folosind rotații zig, zig-zig sau zig-zag. Această auto-aranjare amortizează costul operațiilor la O(log n) per operație, pe secvențe lungi de accesuri.
+Un **Splay Tree** este un arbore binar de căutare auto-aranjat. Orice acces (inserare, căutare, ștergere) “splay-aza” (aduce în rădăcină) nodul accesat folosind rotații zig, zig-zig sau zig-zag. Această auto-aranjare amortizează costul operațiilor la O(log n) per operație, pe secvențe lungi de accesuri.
 
 ---
 
