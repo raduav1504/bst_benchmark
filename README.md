@@ -91,7 +91,7 @@ Pentru fiecare dintre cele 7 categorii am generat 20 de instanțe diferite de te
 
 ---
 
-### Distribuție egală (`equal_mix.in`)
+### Distribuție egală 
 
 - **Rezultat**: Treap 72 825 ms vs Splay 82 373 ms → **Treap ~12 % mai rapid**  
 - **Interpretare**:  
