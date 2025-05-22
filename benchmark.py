@@ -140,11 +140,14 @@ def benchmark():
 
     for fn in test_files:
         path = f"{TEST_DIR}/{fn}"
+        # Read number of operations (for plotting later)
         with open(path) as f_in:
             n = int(f_in.readline().strip())
         sizes.append(n)
 
+        # **Progress print**
         print(f"▶ Running {fn}", flush=True)
+
         for name, exe in BINARIES.items():
             print(f"   • {name:6} … ", end="", flush=True)
             start = time.time()
@@ -159,11 +162,11 @@ def benchmark():
         plt.plot(sizes, times, label=name, marker='o')
     plt.xscale("log", base=2)
     plt.yscale("log", base=10)
-    plt.xlabel("Num Operations")
+    plt.xlabel("Number of Operations")
     plt.ylabel("Time (ms)")
     plt.legend()
     plt.gca().yaxis.set_major_formatter(ticker.ScalarFormatter())
-    plt.title("Treap vs Splay")
+    plt.title("Treap vs Splay Performance")
     plt.tight_layout()
     plt.savefig("benchmark.png")
     print("Benchmark complete. Plot saved to 'benchmark.png'.")
