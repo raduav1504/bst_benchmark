@@ -4,7 +4,7 @@ Acest proiect compară două structuri de date echilibrate – **Treap** și **S
 
 ---
 
-## 1. Definiții
+## Definiții
 
 ### Treap  
 Un **Treap** este un arbore binar de căutare care, pe lângă cheia fiecărui nod, stochează și o _prioritate_ aleasă aleator. Invariantul BST se menține pe chei, iar heap-ul (max-heap sau min-heap) se menține pe priorități. La inserare și ștergere se folosesc rotații pentru a restaura proprietatea de heap, asigurând complexitate amortizată O(log n).
@@ -14,7 +14,7 @@ Un **Splay Tree** este un arbore binar de căutare auto-aranjat. Orice acces (in
 
 ---
 
-## 2. Operațiile testate
+## Operațiile testate
 
 Cele şase operații ABCE (din Infoarena “abce”) implementate și măsurate sunt:
 
@@ -27,7 +27,7 @@ Cele şase operații ABCE (din Infoarena “abce”) implementate și măsurate 
 
 ---
 
-## 3. Cazurile de test
+## Cazurile de test
 
 Generăm **7** fișiere de test, fiecare cu **Q = 1 000 000** operații și valori X,Y ∈ [−10⁹, 10⁹]:
 
