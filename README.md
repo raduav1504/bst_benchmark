@@ -1,6 +1,6 @@
 # Compararea performanțelor Treap vs Splay Tree
 
-Acest proiect compară două structuri de date echilibrate – **Treap** și **Splay Tree** – pe un set de operații dinamice de tip ABBCE, măsurând timpii de execuție în diverse scenarii de lucru.
+Acest proiect compară două structuri de date echilibrate – **Treap** și **Splay Tree** – pe un set de operații dinamice de tip ABCE, măsurând timpii de execuție în diverse scenarii de lucru.
 
 ---
 
