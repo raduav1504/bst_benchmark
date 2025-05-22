@@ -31,15 +31,15 @@ Cele şase operații ABCE (din Infoarena “abce”) implementate și măsurate 
 
 Generăm **7** fișiere de test, fiecare cu **Q = 1 000 000** operații și valori X,Y ∈ [−10⁹, 10⁹]:
 
-| Nume fișier   | Mix operații                   | Detalii                                                                                     |
-|---------------|--------------------------------|---------------------------------------------------------------------------------------------|  
-| `heavy_op1.in` | 70 % inserări, 6 % restul      | 70 % tip 1 (insert), câte ≈ 6 % din celelalte 5 operații                                     |
-| `heavy_op2.in` | 70 % ștergeri, 6 % restul      | 70 % tip 2 (delete), restul împărțit egal                                                  |
-| `heavy_op3.in` | 70 % căutări, 6 % restul       | 70 % tip 3 (search), restul egal                                                            |
-| `heavy_op4.in` | 70 % predecesori, 6 % restul   | 70 % tip 4 (predecessor), restul egal                                                       |
-| `heavy_op5.in` | 70 % succesor, 6 % restul      | 70 % tip 5 (successor), restul egal                                                         |
-| `heavy_op6.in` | 70 % interogări de tip 6, 6 % restul | 70 % tip 6 (range query), restul egal                                                |
-| `equal_mix.in` | ~16.67 % din fiecare tip       | Împărțire egală a celor 6 tipuri de operații                                                |
+| Nume fișier   |  Detalii                                                                                     |
+|---------------|--------------------------------------------------------------------------------------------|  
+| `heavy_op1.in`| 70 % tip 1 (insert), câte ≈ 6 % din celelalte 5 operații                                     |
+| `heavy_op2.in` | 70 % tip 2 (delete), restul împărțit egal                                                  |
+| `heavy_op3.in` | 70 % tip 3 (search), restul egal                                                            |
+| `heavy_op4.in` | 70 % tip 4 (predecessor), restul egal                                                       |
+| `heavy_op5.in` | 70 % tip 5 (successor), restul egal                                                         |
+| `heavy_op6.in` | 70 % tip 6 (range query), restul egal                                                |
+| `equal_mix.in` | Împărțire egală a celor 6 tipuri de operații                                                |
 
 Fiecare fișier se generează astfel:
 1. Calculăm cota absolută de linii pentru fiecare tip de operație (sumă = 750 000).  
