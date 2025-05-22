@@ -55,3 +55,4 @@ Pentru fiecare dintre cele 7 categorii am generat 20 de instanțe diferite de te
 | heavy_op6      | 102 191 | 108 803 |
 | equal_mix      |  72 825 |  82 373 |
 
+## Interpretarea Datelor
