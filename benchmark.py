@@ -1,181 +1,88 @@
-import os
-import random
-import subprocess
-import time
-import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker
+import os, random, subprocess, time
 
-# ==============================
-# Configuration
-# ==============================
-
-# Total number of operations per test
-# You can temporarily set this to 10_000 for a quick dry-run
-Q = 1_000_000
-
-# Key range for random sampling
-KEY_MIN, KEY_MAX = -1_000_000_000, 1_000_000_000
-
-# Directory to store generated tests
-TEST_DIR = "tests"
+NUM_QUERIES = 100_000
+MAX_VAL     = 1_000_000
+TEST_DIR    = "tests"
 os.makedirs(TEST_DIR, exist_ok=True)
 
-# C++ binaries to benchmark
 BINARIES = {
-    "Treap": "./treap",
-    "Splay": "./splay"
+    'treap': './treap',
+    'splay': './splay',
 }
 
-# ==============================
-# Test Generators
-# ==============================
+percentages = {}
+for op in range(1, 7):
+    name = f"heavy_op{op}"
+    percentages[name] = {i: 6.0 for i in range(1, 7)}
+    percentages[name][op] = 70.0
 
-def write_test(filename, ops):
-    """Write ABCE-format test to filename."""
-    with open(filename, "w") as f:
-        f.write(f"{len(ops)}\n")
-        for op in ops:
-            if op[0] == 6:
-                f.write(f"6 {op[1]} {op[2]}\n")
-            else:
-                f.write(f"{op[0]} {op[1]}\n")
+equal_pct = 100.0 / 6.0
+percentages['equal_mix'] = {i: equal_pct for i in range(1, 7)}
 
-def generate_simple_patterns():
-    """Generate ascending, descending, and random insert+search patterns."""
-    base = TEST_DIR + os.sep
-    # 1. Ascending
-    ops = []
-    for x in range(1, Q+1):
-        ops.append((1, x))
-        ops.append((3, x))
-    write_test(base + "simple_ascending.in", ops)
 
-    # 2. Descending
-    ops = []
-    for x in range(Q, 0, -1):
-        ops.append((1, x))
-        ops.append((3, x))
-    write_test(base + "simple_descending.in", ops)
+categories = {}
+for cat, pct_map in percentages.items():
+    quotas = {i: int(NUM_QUERIES * pct_map[i] / 100.0) for i in range(1, 7)}
+    total = sum(quotas.values())
+    # Corectam din cauza rotunjirii
+    i = 1
+    while total < NUM_QUERIES:
+        quotas[i] += 1
+        total += 1
+        i = i % 6 + 1
+    while total > NUM_QUERIES:
+        quotas[i] -= 1
+        total -= 1
+        i = i % 6 + 1
+    categories[cat] = quotas
 
-    # 3. Random
-    seq = list(range(1, Q+1))
-    random.shuffle(seq)
-    ops = []
-    for x in seq:
-        ops.append((1, x))
-        ops.append((3, x))
-    write_test(base + "simple_random.in", ops)
-
-def generate_heavy_patterns():
-    patterns = {
-        "insert_heavy":  (70, 20, 10),
-        "delete_heavy":  (20, 70, 10),
-        "search_heavy":  (10, 10, 80),
-        "balanced":      (25, 25, 50),
-    }
-    for name, (p1, p2, p3) in patterns.items():
+#generare fisiere test
+print("Generating test files…")
+test_paths = {}
+for cat, quotas in categories.items():
+    path = os.path.join(TEST_DIR, f"{cat}.in")
+    with open(path, 'w') as f:
+        f.write(f"{NUM_QUERIES}\n")
+        # construim lista de coduri op, o shuffle-uim
         ops = []
-        c1 = int(Q * p1/100)
-        c2 = int(Q * p2/100)
-        crest = Q - c1 - c2
-
-        for _ in range(c1):
-            ops.append((1, random.randint(KEY_MIN, KEY_MAX)))
-        for _ in range(c2):
-            ops.append((2, random.randint(KEY_MIN, KEY_MAX)))
-        coc = crest // 4
-        for _ in range(coc):
-            ops.append((3, random.randint(KEY_MIN, KEY_MAX)))
-        for _ in range(coc):
-            ops.append((4, random.randint(KEY_MIN, KEY_MAX)))
-        for _ in range(coc):
-            ops.append((5, random.randint(KEY_MIN, KEY_MAX)))
-        for _ in range(coc):
-            x = random.randint(KEY_MIN, KEY_MAX)
-            y = random.randint(KEY_MIN, KEY_MAX)
-            if x > y: x, y = y, x
-            ops.append((6, x, y))
-
-        # pad/truncate to exactly Q
-        if len(ops) < Q:
-            ops += [(3, random.randint(KEY_MIN, KEY_MAX))] * (Q - len(ops))
-        else:
-            ops = ops[:Q]
-
+        for op_code, count in quotas.items():
+            ops += [op_code] * count
         random.shuffle(ops)
-        write_test(f"{TEST_DIR}/{name}.in", ops)
+        # scriem fiecare linie
+        for op in ops:
+            if op in (1,2,3,4,5):
+                x = random.randint(-MAX_VAL, MAX_VAL)
+                f.write(f"{op} {x}\n")
+            else:  # op == 6
+                x = random.randint(-MAX_VAL, MAX_VAL)
+                y = random.randint(-MAX_VAL, MAX_VAL)
+                if x > y: x, y = y, x
+                f.write(f"6 {x} {y}\n")
+    test_paths[cat] = path
+    print(f"  • {cat}.in ([{percentages[cat][1]:.1f}%, …, {percentages[cat][6]:.1f}%])")
 
-def generate_range_heavy():
-    p = {"i":50, "d":10, "s":20, "r":20}
-    codes = [1]*int(Q*p["i"]/100) + \
-            [2]*int(Q*p["d"]/100) + \
-            [3]*int(Q*p["s"]/100) + \
-            [6]*int(Q*p["r"]/100)
-    while len(codes) < Q:
-        codes.append(3)
-    random.shuffle(codes)
+#masuram timp
+print("\nRunning benchmarks:")
+results = {cat: {} for cat in categories}
+for cat, path in test_paths.items():
+    print(f"\n-- {cat} --")
+    for name, exe in BINARIES.items():
+        t0 = time.time()
+        subprocess.run([exe], stdin=open(path), stdout=subprocess.DEVNULL)
+        ms = (time.time() - t0) * 1000
+        results[cat][name] = ms
+        print(f"   {name:6s}: {ms:.0f} ms")
 
-    ops = []
-    for op in codes:
-        if op in (1,2,3):
-            ops.append((op, random.randint(KEY_MIN, KEY_MAX)))
-        else:
-            x = random.randint(KEY_MIN, KEY_MAX)
-            y = random.randint(KEY_MIN, KEY_MAX)
-            if x > y: x, y = y, x
-            ops.append((6, x, y))
-    write_test(f"{TEST_DIR}/range_heavy.in", ops)
-
-# ==============================
-# Benchmark Harness
-# ==============================
-def compile_binaries():
-    subprocess.run(["g++", "-O2", "-std=c++17", "treap.cpp", "-o", "treap"], check=True)
-    subprocess.run(["g++", "-O2", "-std=c++17", "splay.cpp", "-o", "splay"], check=True)
-
-def benchmark():
-    results = {name: [] for name in BINARIES}
-    test_files = sorted(os.listdir(TEST_DIR))
-    sizes = []
-
-    for fn in test_files:
-        path = os.path.join(TEST_DIR, fn)
-        # Read number of operations (for plotting)
-        with open(path) as f_in:
-            n = int(f_in.readline().strip())
-        sizes.append(n)
-
-        # ← Live progress!
-        print(f"▶ Running {fn}", flush=True)
-
-        for name, exe in BINARIES.items():
-            print(f"   • {name:6} … ", end="", flush=True)
-            start = time.time()
-            subprocess.run([exe], stdin=open(path), stdout=subprocess.DEVNULL)
-            elapsed = (time.time() - start) * 1000
-            print(f"{elapsed:.0f} ms", flush=True)
-            results[name].append(elapsed)
-
-    # Plot results
-    plt.figure(dpi=300)
-    for name, times in results.items():
-        plt.plot(sizes, times, label=name, marker='o')
-    plt.xscale("log", base=2)
-    plt.yscale("log", base=10)
-    plt.xlabel("Number of Operations")
-    plt.ylabel("Time (ms)")
-    plt.legend()
-    plt.gca().yaxis.set_major_formatter(ticker.ScalarFormatter())
-    plt.title("Treap vs Splay Performance")
-    plt.tight_layout()
-    plt.savefig("benchmark.png")
-    print("Benchmark complete. Plot saved to 'benchmark.png'.")
-
-if __name__ == "__main__":
-    generate_simple_patterns()
-    generate_heavy_patterns()
-    generate_range_heavy()
-    print("Tests generated in './tests/'")
-    compile_binaries()
-    print("Binaries compiled.")
-    benchmark()
+#tabel final
+print("\nSummary (ms):")
+# header
+print(f"{'Test':20s}", end="")
+for name in BINARIES:
+    print(f"{name:>10s}", end="")
+print()
+# rows
+for cat in categories:
+    print(f"{cat:20s}", end="")
+    for name in BINARIES:
+        print(f"{results[cat][name]:10.0f}", end="")
+    print()
