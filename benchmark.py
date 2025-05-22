@@ -156,17 +156,20 @@ def benchmark():
     results = {name: [] for name in BINARIES}
     test_files = sorted(os.listdir(TEST_DIR))
     sizes = []
-    for fn in test_files:
+      for fn in test_files:
         path = f"{TEST_DIR}/{fn}"
-        # determine approximate size by number of ops
-        with open(path) as f:
-            n = int(f.readline().strip())
+        # Read number of operations (for plotting later)
+        with open(path) as f_in:
+            n = int(f_in.readline().strip())
         sizes.append(n)
 
+        print(f"▶ Running test file: {fn}")
         for name, exe in BINARIES.items():
+            print(f"   • {name:6} … ", end="", flush=True)
             start = time.time()
             subprocess.run([exe], stdin=open(path), stdout=subprocess.DEVNULL)
-            elapsed = (time.time() - start)*1000
+            elapsed = (time.time() - start) * 1000
+            print(f"{elapsed:.0f} ms")
             results[name].append(elapsed)
 
     # Plot
