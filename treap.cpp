@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-
 struct Node {
     int key, priority;
     Node *l, *r;
