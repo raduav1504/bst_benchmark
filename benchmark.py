@@ -1,7 +1,7 @@
 import os, random, subprocess, time
 
-NUM_QUERIES = 100_000
-MAX_VAL     = 1_000_000
+NUM_QUERIES = 1_000_000
+MAX_VAL     = 1_000_000_000
 TEST_DIR    = "tests"
 os.makedirs(TEST_DIR, exist_ok=True)
 
