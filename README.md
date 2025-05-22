@@ -2,7 +2,7 @@
 
 Acest proiect compară două structuri de date echilibrate – **Treap** și **Splay Tree** – pe un set de operații dinamice, măsurând timpii de execuție în diverse scenarii de lucru.
 
----
+----
 
 ## Definiții
 
