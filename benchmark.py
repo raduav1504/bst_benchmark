@@ -135,21 +135,19 @@ def compile_binaries():
 
 def benchmark():
     results = {name: [] for name in BINARIES}
-
-    # DEBUG: show what tests folder looks like
     test_files = sorted(os.listdir(TEST_DIR))
-    print("DEBUG: test_files =", test_files, flush=True)
-
     sizes = []
 
     for fn in test_files:
-        print("DEBUG: loop got fn =", fn, flush=True)
-        path = f"{TEST_DIR}/{fn}"
+        path = os.path.join(TEST_DIR, fn)
+        # Read number of operations (for plotting)
         with open(path) as f_in:
             n = int(f_in.readline().strip())
         sizes.append(n)
 
+        # ← Live progress!
         print(f"▶ Running {fn}", flush=True)
+
         for name, exe in BINARIES.items():
             print(f"   • {name:6} … ", end="", flush=True)
             start = time.time()
@@ -157,7 +155,6 @@ def benchmark():
             elapsed = (time.time() - start) * 1000
             print(f"{elapsed:.0f} ms", flush=True)
             results[name].append(elapsed)
-
 
     # Plot results
     plt.figure(dpi=300)
