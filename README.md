@@ -57,5 +57,16 @@ Pentru fiecare dintre cele 7 categorii am generat 20 de instanțe diferite de te
 
 ## Interpretarea Datelor
 
+- Treap e mai rapid în toate testele, cu diferenţe între ~0,3% (ștergeri) și ~15% (mix egal de operaţii).
+- Ștergerile (heavy_op2) sunt practic la fel: splay doar cu 0,3% mai lent - asta se poate datora si din lipsa unui volum mai masiv de date.
+- Succesorii (heavy_op5) şi mix-ul egal sunt cele mai “dure” pentru splay, unde costul rotaţiilor se simte cel mai mult (+13%–15%)- asta se poate datora si timpului indelungat de procesare al acestor teste, fapt ce duce la o dilatare a diferentei.
+- Căutările şi predecesorii dau cam +4%–6% în minus pentru splay, de asteptat.
 
+## Concluzie
+
+Pe baza testelor efectuate, putem trage următoarele concluzii:
+
+- Treap oferă performanţă stabilă şi predictibilă în toate scenariile de lucru, fiind cu până la ~15% mai rapid decât Splay Tree atunci când nu există un pattern de acces repetitiv.
+- Splay Tree îşi justifică costul suplimentar doar atunci când există un set restrâns de noduri accesate frecvent (localitate temporală), caz în care restructurarea automată poate aduce avantaje pe termen lung.
+- Pentru majoritatea aplicaţiilor generice, în care operaţiile cad pe chei diferite, Treap este alegerea optimă datorită numărului constant şi mic de rotaţii necesare pentru menţinerea echilibrului.
 
