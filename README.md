@@ -43,7 +43,7 @@ Generăm **7** fișiere de test, fiecare cu **Q = 1 000 000** operații și valo
 
 ## Rezultate
 
-Pentru fiecare dintre cele 7 categorii am generat 20 de instanțe diferite de teste și am rulat fiecare implementare de **20 de ori** pe fiecare fișier, obținând în total **35 de măsurători** pentru Treap și 35 pentru Splay. În tabelul de mai jos sunt prezentate **valorile medii** ale timpilor de execuție (în milisecunde):
+Pentru fiecare dintre cele 7 categorii am generat 20 de instanțe diferite de teste și am rulat fiecare implementare de **20 de ori** pe fiecare fișier, obținând în total 140 de măsurători pentru Treap și 140 pentru Splay. În tabelul de mai jos sunt prezentate **valorile medii** ale timpilor de execuție (în milisecunde):
 
 | Test           | Treap   | Splay   |
 |----------------|--------:|--------:|
