@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Treap node
+
 struct Node {
     int key, priority;
     Node *l, *r;
