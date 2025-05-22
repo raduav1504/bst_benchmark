@@ -134,6 +134,7 @@ def compile_binaries():
     subprocess.run(["g++", "-O2", "-std=c++17", "splay.cpp", "-o", "splay"], check=True)
 
 def benchmark():
+    print("=== benchmark() START ===", flush=True)
     results = {name: [] for name in BINARIES}
 
     # DEBUG: show what tests folder looks like
