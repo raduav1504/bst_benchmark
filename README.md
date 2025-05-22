@@ -41,6 +41,4 @@ Generăm **7** fișiere de test, fiecare cu **Q = 1 000 000** operații și valo
 | `heavy_op6.in` | 70 % tip 6 (range query), restul egal                                                |
 | `equal_mix.in` | Împărțire egală a celor 6 tipuri de operații                                                |
 
-Fiecare fișier se generează astfel:
-1. Calculăm cota absolută de linii pentru fiecare tip de operație (sumă = 750 000).  
-2. Construim o listă cu codurile de operație în funcție de cote, o amestecăm, și apoi scriem pe fiecare linie:
+
